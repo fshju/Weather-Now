@@ -183,13 +183,13 @@ const Header: React.FC<HeaderProps> = ({ weatherCondition }) => {
             
               
               <nav className="space-y-3">
-                <Link href="/" className="flex items-center space-x-3 hover:bg-gray-50 p-4 rounded-xl transition-all">
+                <Link href="/" className="flex items-center space-x-3 bg-red-500 text-white hover:bg-gray-400 p-4 rounded-xl transition-all">
                   <span className="text-xl">🏠</span>
-                  <span className="font-medium text-lg text-gray-800">Dashboard</span>
+                  <span className="font-medium text-lg ">Dashboard</span>
                 </Link>
-                <Link href="/forecast" className="flex items-center space-x-3 hover:bg-gray-50 p-4 rounded-xl transition-all">
+                <Link href="/forecast" className="flex items-center space-x-3 bg-red-500 text-white hover:bg-gray-400 p-4 rounded-xl transition-all">
                   <span className="text-xl">📅</span>
-                  <span className="font-medium text-lg text-gray-800">Forecast</span>
+                  <span className="font-medium text-lg ">Forecast</span>
                 </Link>
                 <button 
                   onClick={handleShareLocation}

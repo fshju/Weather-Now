@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import Head from 'next/head';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
@@ -48,9 +48,9 @@ const WeatherApp: React.FC = () => {
         setWeather(null);
         setError('No weather data available for this location');
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       setWeather(null);
-      if (err.response?.data?.error?.message) {
+      if (err instanceof AxiosError && err.response?.data?.error?.message) {
         setError(err.response.data.error.message);
       } else {
         setError('Failed to fetch weather data. Please try again.');
