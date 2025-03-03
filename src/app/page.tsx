@@ -32,14 +32,29 @@ const WeatherApp: React.FC = () => {
   const fetchWeather = async (cityName: string) => {
     try {
       const apiKey = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
+      if (!apiKey) {
+        setError('API key is missing. Please check your environment variables.');
+        return;
+      }
+      
       const response = await axios.get(
-        `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${cityName}&aqi=no`
+        `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${cityName}&aqi=no`
       );
-      setWeather(response.data);
-      setError('');
-    } catch {
+      
+      if (response.data) {
+        setWeather(response.data);
+        setError('');
+      } else {
+        setWeather(null);
+        setError('No weather data available for this location');
+      }
+    } catch (err: any) {
       setWeather(null);
-      setError('Failed to fetch weather data');
+      if (err.response?.data?.error?.message) {
+        setError(err.response.data.error.message);
+      } else {
+        setError('Failed to fetch weather data. Please try again.');
+      }
     }
   };
 
@@ -209,7 +224,7 @@ const WeatherApp: React.FC = () => {
 
                   <div className="flex items-center justify-center gap-2 sm:gap-4 bg-gradient-to-r from-blue-50 to-purple-50 p-2 sm:p-4 rounded-lg">
                     <Image 
-                      src={weather.current.condition.icon}
+                      src={`https:${weather.current.condition.icon}`}
                       alt={weather.current.condition.text}
                       width={48}
                       height={48}
